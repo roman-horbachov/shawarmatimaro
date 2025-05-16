@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+    match /databases/{database}/documents {
+
+        // Пользователи
+        match /users/{userId} {
+            allow create: if request.auth != null
+                && request.auth.uid == userId;
+            allow read, update: if request.auth != null
+                && request.auth.uid == userId;
+            allow delete: if false;
+        }
+
+        // Заказы
+        match /orders/{orderId} {
+            allow create: if
+        (request.auth != null
+            && request.auth.uid == request.resource.data.userId)
+        ||
+        (request.auth == null // Временно разрешить создание для гостей без дополнительных проверок
+        );
+
+            // Дозволити читання для будь-якого аутентифікованого користувача
+            allow read: if request.auth != null;
+
+            // Дозволити оновлення для будь-якого аутентифікованого користувача
+            allow update: if request.auth != null;
+
+            // Видалення все ще заборонено
+            allow delete: if false;
+        }
+
+
+        // Товары
+        match /products/{productId} {
+            // Список и получение — открыто всем
+            allow list, get: if true;
+            // CRUD только для аутентифицированных пользователей
+            allow create, update, delete: if request.auth != null;
+        }
+
+        // Всё прочее — запрет
+        match /{document=**} {
+            allow read, write: if false;
+        }
+    }
+}
