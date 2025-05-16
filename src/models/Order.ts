@@ -8,7 +8,7 @@ export enum OrderStatus {
 }
 
 export interface OrderItem {
-    id: string;
+    id: number;
     name: string;
     price: number;
     quantity: number;
@@ -16,11 +16,11 @@ export interface OrderItem {
 }
 
 export interface Order {
-    id?: string;
+    id: string;
     items: OrderItem[];
-    status: OrderStatus; // This should probably not be optional as an order should have a status
+    status: OrderStatus;
     total: number;
-    createdAt?: string;
+    createdAt: string;
     userId?: string | null;
     userEmail?: string | null;
     userName?: string | null;
