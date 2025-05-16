@@ -14,7 +14,7 @@ const ForgotPasswordPage: React.FC = () => {
                             <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-3">
                                 <span className="text-primary font-bold text-xl">ТМ</span>
                             </div>
-                            <span className="font-heading font-bold text-2xl">Шаурма ТиМаРо</span>
+                            <span className="font-heading font-bold text-2xl">Шаурма ТіМаРо</span>
                         </Link>
                         <h2 className="text-3xl md:text-4xl font-bold mb-6">Відновлення паролю</h2>
                         <p className="text-lg mb-6">
@@ -32,7 +32,7 @@ const ForgotPasswordPage: React.FC = () => {
                             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center mr-2">
                                 <span className="text-white font-bold text-lg">ТМ</span>
                             </div>
-                            <span className="font-heading font-bold text-xl">Шаурма ТиМаРо</span>
+                            <span className="font-heading font-bold text-xl">Шаурма ТіМаРо</span>
                         </Link>
                     </div>
                     <ForgotPasswordForm />

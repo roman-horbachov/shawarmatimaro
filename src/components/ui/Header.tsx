@@ -35,7 +35,7 @@ const Header: React.FC = () => {
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center mr-2">
               <span className="text-white font-bold text-lg">ТМ</span>
             </div>
-            <span className="font-heading font-bold text-xl md:text-2xl text-text">Шаурма ТиМаРо</span>
+            <span className="font-heading font-bold text-xl md:text-2xl text-text">Шаурма ТіМаРо</span>
           </Link>
 
           {/* Desktop Nav */}
