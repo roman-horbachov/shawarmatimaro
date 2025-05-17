@@ -1,10 +1,8 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import ProductCard, { Product } from '@/components/ui/ProductCard';
 import CategoryFilter from '@/components/ui/CategoryFilter';
 import ProductSearch from '@/components/ui/ProductSearch';
-import { products as initialProducts, categories as initialCategories } from '@/data/products';
 import { getAllProducts } from '@/services/firebaseProductService';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -16,33 +14,29 @@ const MenuPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Load products from Firebase or fallback to localStorage
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
       try {
-        // Try to get products from Firebase
+        // Получаем продукты только из Firebase
         const firebaseProducts = await getAllProducts();
+        console.log('Firebase products:', firebaseProducts); // ← добавь этот лог
+        setProducts(firebaseProducts);
 
-        if (firebaseProducts && firebaseProducts.length > 0) {
-          setProducts(firebaseProducts);
-          // Extract unique categories from products
-          const uniqueCategories = [...new Set(firebaseProducts.map(product => product.category))];
-          setCategories(uniqueCategories);
-        } else {
-          // If Firebase has no products, use local data
-          setProducts(initialProducts);
-          setCategories(initialCategories);
-        }
+        // Получаем уникальные категории из загруженных продуктов
+        const uniqueCategories = [
+          ...new Set(firebaseProducts.map((product) => product.category)),
+        ];
+        setCategories(uniqueCategories);
       } catch (error) {
         console.error('Помилка при завантаженні товарів:', error);
         toast({
           title: "Помилка завантаження",
-          description: "Завантажуємо товари з локального сховища",
+          description: "Не вдалося завантажити товари з сервера",
           variant: "destructive"
         });
-        setProducts(initialProducts);
-        setCategories(initialCategories);
+        setProducts([]);
+        setCategories([]);
       } finally {
         setLoading(false);
       }
@@ -58,9 +52,7 @@ const MenuPage: React.FC = () => {
           : true;
       const searchMatch =
           product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.description
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase());
+          product.description.toLowerCase().includes(searchTerm.toLowerCase());
       return categoryMatch && searchMatch;
     });
   }, [selectedCategory, searchTerm, products]);
