@@ -84,15 +84,6 @@ const UserProfilePage: React.FC = () => {
         }
     };
 
-    const handleCancel = () => {
-        setFormData({
-            name: userProfile?.displayName || user.displayName || '',
-            email: user.email || '',
-            address: userProfile?.address || '',
-            phoneNumber: userProfile?.phone || ''
-        });
-    };
-
     return (
         <MainLayout>
             <div className="container mx-auto px-4 py-12">
@@ -153,6 +144,13 @@ const UserProfilePage: React.FC = () => {
                                     autoComplete="off"
                                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                                 />
+                            </div>
+                            {/* Только кнопка сохранить */}
+                            <div className="flex justify-end">
+                                <Button className="bg-primary hover:bg-primary-dark" type="submit">
+                                    <Save className="h-4 w-4 mr-2" />
+                                    Зберегти зміни
+                                </Button>
                             </div>
                         </form>
                     </div>
