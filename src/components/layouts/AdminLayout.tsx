@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -22,7 +21,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile sidebar backdrop */}
+
       {sidebarOpen && (
         <div 
           className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
@@ -30,14 +29,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         />
       )}
 
-      {/* Sidebar */}
       <aside 
         className={`fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="h-full flex flex-col">
-          {/* Sidebar header */}
+
           <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
             <Link to="/" className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center mr-2">
@@ -55,7 +53,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             </Button>
           </div>
 
-          {/* Sidebar content */}
           <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
             {navigation.map((item) => {
               const isActive = location.pathname === item.href;
@@ -76,7 +73,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             })}
           </nav>
 
-          {/* Sidebar footer */}
           <div className="p-4 border-t border-gray-200">
             <Link to="/">
               <Button variant="outline" className="w-full flex items-center">
@@ -88,9 +84,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className="lg:pl-64">
-        {/* Top header */}
+
         <header className="h-16 flex items-center justify-between bg-white border-b border-gray-200 px-4">
           <Button 
             variant="ghost" 
@@ -108,7 +103,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           </div>
         </header>
 
-        {/* Page content */}
         <main className="p-6">
           {children}
         </main>

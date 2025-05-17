@@ -18,17 +18,22 @@ import { Order, OrderStatus } from "@/models/Order";
 const ORDERS_COLLECTION = "orders";
 const LOCAL_STORAGE_ORDERS_KEY = "shawarma_timaro_orders";
 
-// Создать новый заказ
 export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>): Promise<Order> => {
   try {
+
     const orderWithTimestamp: Omit<Order, 'id'> = {
       ...orderData,
+      changeAmount: orderData.paymentMethod === 'cash'
+          ? (orderData.changeAmount ?? null)
+          : null,
       createdAt: new Date().toISOString(),
       status: OrderStatus.ACCEPTED
     };
 
-    // addDoc сам вернёт id
-    const docRef = await addDoc(collection(db, ORDERS_COLLECTION), orderWithTimestamp as WithFieldValue<Omit<Order, 'id'>>);
+    const docRef = await addDoc(
+        collection(db, ORDERS_COLLECTION),
+        orderWithTimestamp as WithFieldValue<Omit<Order, 'id'>>
+    );
     const orderId = docRef.id;
 
     const newOrder: Order = {
@@ -46,14 +51,16 @@ export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>): P
       ...orderData,
       id: fallbackOrderId,
       createdAt: new Date().toISOString(),
-      status: OrderStatus.ACCEPTED
+      status: OrderStatus.ACCEPTED,
+      changeAmount: orderData.paymentMethod === 'cash'
+          ? (orderData.changeAmount ?? null)
+          : null,
     };
     saveOrderToLocalStorage(fallbackOrder);
     return fallbackOrder;
   }
 };
 
-// Получить все заказы
 export const getAllOrders = async (): Promise<Order[]> => {
   try {
     const q = query(
@@ -71,7 +78,6 @@ export const getAllOrders = async (): Promise<Order[]> => {
   }
 };
 
-// Получить заказы пользователя
 export const getUserOrders = async (userId: string): Promise<Order[]> => {
   try {
     const q = query(
@@ -91,7 +97,6 @@ export const getUserOrders = async (userId: string): Promise<Order[]> => {
   }
 };
 
-// Получить заказ по ID
 export const getOrderById = async (orderId: string): Promise<Order | null> => {
   try {
     const orderDoc = await getDoc(doc(db, ORDERS_COLLECTION, orderId));
@@ -109,7 +114,6 @@ export const getOrderById = async (orderId: string): Promise<Order | null> => {
   }
 };
 
-// Обновить статус заказа
 export const updateOrderStatus = async (orderId: string, status: OrderStatus): Promise<Order> => {
   try {
     const orderRef = doc(db, ORDERS_COLLECTION, orderId);
@@ -189,7 +193,6 @@ function updateOrderStatusLocally(orderId: string, status: OrderStatus): Order {
   return orders[orderIndex];
 }
 
-// Инициализация заказов из localStorage, если Firebase пуст
 export const initializeOrders = async (): Promise<void> => {
   try {
     const querySnapshot = await getDocs(collection(db, ORDERS_COLLECTION));

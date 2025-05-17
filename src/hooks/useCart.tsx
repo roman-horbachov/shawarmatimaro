@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product } from '@/components/ui/ProductCard';
 
@@ -37,8 +36,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     }
   }, []);
-  
-  // Save cart to localStorage whenever it changes
+
   useEffect(() => {
     localStorage.setItem('shawarmaExpressCart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -64,8 +62,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     });
   };
-  
-  // Modified to remove item completely regardless of quantity
+
   const removeFromCart = (productId: string) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };

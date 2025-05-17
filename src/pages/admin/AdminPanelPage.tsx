@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +14,6 @@ const AdminPanelPage: React.FC = () => {
         queryFn: getAllOrders,
     });
 
-    // Calculate order statistics
     const totalOrders = orders?.length || 0;
     const pendingOrders = orders?.filter(o => o.status === OrderStatus.ACCEPTED).length || 0;
     const preparingOrders = orders?.filter(o => o.status === OrderStatus.PREPARING).length || 0;

@@ -10,7 +10,7 @@ import { createOrder } from '@/services/firebaseOrderService';
 import { OrderStatus } from '@/models/Order';
 import { useAuth } from '@/hooks/useAuth';
 
-const DELIVERY_FEE = 60; // Delivery fee in UAH
+const DELIVERY_FEE = 60;
 
 const CartPage: React.FC = () => {
   const { cartItems, updateQuantity, removeFromCart, totalPrice, clearCart } = useCart();
@@ -26,11 +26,8 @@ const CartPage: React.FC = () => {
   const [needChange, setNeedChange] = useState(false);
   const [changeAmountError, setChangeAmountError] = useState('');
 
-  // Calculate final price with delivery
   const finalPrice = totalPrice + DELIVERY_FEE;
 
-  // Load saved address from user profile
-  // Also load phone number if available
   useEffect(() => {
     if (isCheckingOut && userProfile) {
       setDeliveryAddress(userProfile.address || '');
@@ -55,7 +52,6 @@ const CartPage: React.FC = () => {
     const value = e.target.value;
     setChangeAmount(value);
 
-    // Validate that change amount is not less than order total
     const numValue = parseFloat(value);
     if (isNaN(numValue) || numValue < finalPrice) {
       setChangeAmountError(`Сума має бути не менше суми замовлення з доставкою (${finalPrice} ₴)`);
@@ -76,8 +72,6 @@ const CartPage: React.FC = () => {
       return;
     }
 
-    // Validate phone number format (+380XXXXXXXXX - 12 characters total)
-    // Ensure it starts with +380 and has 9 digits after
     if (!/^\+380\d{9}$/.test(phoneNumber)) {
       toast({
         title: "Введіть коректний номер телефону",
@@ -109,34 +103,30 @@ const CartPage: React.FC = () => {
     }
 
     try {
-      // Create order object
+
       const orderData = {
         items: cartItems,
-        total: finalPrice, // Include delivery fee in total
-        status: OrderStatus.ACCEPTED, // Change to ACCEPTED by default
+        total: finalPrice,
+        status: OrderStatus.ACCEPTED,
         userId: user?.uid || null,
         userEmail: user?.email || null,
         userName: user?.displayName || userProfile?.displayName || null,
         address: deliveryAddress,
-        phone: phoneNumber, // Use 'phone' field as per Order model
+        phone: phoneNumber,
         paymentMethod: paymentMethod as "cash" | "card" | "online",
         changeAmount: needChange ? changeAmount : undefined,
         deliveryFee: DELIVERY_FEE
       };
 
-      // Save order in localStorage
       const newOrder = await createOrder(orderData);
 
-      // Show success message
       toast({
         title: "Замовлення прийнято!",
         description: "Ваше замовлення успішно оформлено та передано в обробку.",
       });
 
-      // Clear cart
       clearCart();
 
-      // Navigate to success page
       navigate('/order-success', { state: { order: newOrder } });
     } catch (error) {
       console.error('Помилка при створенні замовлення:', error);
@@ -180,7 +170,6 @@ const CartPage: React.FC = () => {
               </div>
           ) : (
               <div className="flex flex-col lg:flex-row gap-6">
-                {/* Cart Items */}
                 <div className="lg:w-2/3">
                   <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                     <div className="p-6">
@@ -237,7 +226,6 @@ const CartPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Order Summary */}
                 <div className="lg:w-1/3">
                   <div className="bg-white rounded-lg shadow-sm p-6">
                     <h2 className="text-xl font-semibold mb-4">
@@ -266,16 +254,15 @@ const CartPage: React.FC = () => {
                                   value={phoneNumber}
                                   onChange={(e) => {
                                     let value = e.target.value;
-                                    // Ensure it always starts with +380
+
                                     const prefix = '+380';
 
-                                    // Only allow digits after the prefix
                                     if (value.startsWith(prefix)) {
-                                      // Keep the prefix and only add digits, limiting to 9 digits after prefix
+
                                       const digitsAfterPrefix = value.substring(prefix.length).replace(/[^0-9]/g, '');
                                       value = prefix + digitsAfterPrefix.substring(0, 9);
                                     } else {
-                                      // If somehow prefix is lost, reset to prefix
+
                                       value = prefix;
                                     }
                                     setPhoneNumber(value);

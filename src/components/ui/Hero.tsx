@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -42,7 +41,6 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Design elements */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-secondary opacity-20 rounded-bl-full"></div>
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-secondary opacity-20 rounded-tr-full"></div>
       </div>

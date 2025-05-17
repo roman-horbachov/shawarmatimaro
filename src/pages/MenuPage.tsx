@@ -1,39 +1,37 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import MainLayout from '@/components/layouts/MainLayout';
-import ProductCard, { Product } from '@/components/ui/ProductCard';
-import CategoryFilter from '@/components/ui/CategoryFilter';
-import ProductSearch from '@/components/ui/ProductSearch';
-import { getAllProducts } from '@/services/firebaseProductService';
-import { useToast } from '@/components/ui/use-toast';
+import React, { useState, useMemo, useEffect } from "react";
+import MainLayout from "@/components/layouts/MainLayout";
+import ProductCard, { Product } from "@/components/ui/ProductCard";
+import CategoryFilter from "@/components/ui/CategoryFilter";
+import ProductSearch from "@/components/ui/ProductSearch";
+import { getAllProducts } from "@/services/firebaseProductService";
+import { useToast } from "@/components/ui/use-toast";
 
 const MenuPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
+
     const loadProducts = async () => {
       setLoading(true);
       try {
-        // Получаем продукты только из Firebase
         const firebaseProducts = await getAllProducts();
-        console.log('Firebase products:', firebaseProducts); // ← добавь этот лог
         setProducts(firebaseProducts);
 
-        // Получаем уникальные категории из загруженных продуктов
         const uniqueCategories = [
           ...new Set(firebaseProducts.map((product) => product.category)),
         ];
         setCategories(uniqueCategories);
       } catch (error) {
-        console.error('Помилка при завантаженні товарів:', error);
+        console.error("Помилка при завантаженні товарів:", error);
         toast({
           title: "Помилка завантаження",
           description: "Не вдалося завантажити товари з сервера",
-          variant: "destructive"
+          variant: "destructive",
         });
         setProducts([]);
         setCategories([]);
@@ -45,6 +43,7 @@ const MenuPage: React.FC = () => {
     loadProducts();
   }, [toast]);
 
+  // Фильтрация продуктов
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const categoryMatch = selectedCategory

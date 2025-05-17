@@ -1,4 +1,3 @@
-// src/components/ui/Header.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, User as UserIcon, History, LogOut } from 'lucide-react';
@@ -30,12 +29,11 @@ const Header: React.FC = () => {
   return (
       <header className="bg-white shadow-md py-4">
         <div className="container mx-auto px-4 flex items-center justify-between">
-          {/* Logo */}
+
           <Link to="/" className="flex items-center">
             <img src="/logo.png" alt="Логотип Шаурма ТіМаРо" className="h-16 w-auto mr-2" />
           </Link>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="font-medium text-text-muted hover:text-primary transition-colors">Головна</Link>
             <Link to="/menu" className="font-medium text-text-muted hover:text-primary transition-colors">Меню</Link>
@@ -43,7 +41,6 @@ const Header: React.FC = () => {
             <Link to="/contacts" className="font-medium text-text-muted hover:text-primary transition-colors">Контакти</Link>
           </nav>
 
-          {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Корзина */}
             <Link to="/cart" className="relative">
@@ -57,7 +54,6 @@ const Header: React.FC = () => {
               </Button>
             </Link>
 
-            {/* Пользователь */}
             {loading ? (
                 <div>Loading...</div>
             ) : user ? (
@@ -104,7 +100,6 @@ const Header: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Toggle */}
           <div className="flex md:hidden items-center space-x-4">
             <Link to="/cart" className="relative">
               <Button variant="ghost" size="icon">
@@ -122,7 +117,6 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
             <div className="md:hidden mt-4 animate-fade-in bg-white">
               <div className="flex flex-col space-y-2 pb-4">

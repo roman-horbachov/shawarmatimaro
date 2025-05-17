@@ -1,4 +1,3 @@
-
 import React from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';

@@ -1,5 +1,3 @@
-
-// src/pages/OrderSuccessPage.tsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MainLayout from '@/components/layouts/MainLayout';
@@ -10,24 +8,22 @@ const OrderSuccessPage: React.FC = () => {
   const location = useLocation();
   const order = location.state?.order as Order | undefined;
 
-  // Если данных нет — используем рандомный номер
   const orderNumber = order?.id ?? `ORD-${Math.floor(10000 + Math.random() * 90000)}`;
 
-  // Выбор способа оплаты
   const getPaymentLabel = () => {
-    if (!order) return 'Готівкою кур\'єру';
+    if (!order) return "Готівкою кур'єру";
     
     switch (order.paymentMethod) {
       case 'cash':
         return order.changeAmount 
           ? `Готівкою кур'єру (потрібна решта з ${order.changeAmount} ₴)`
-          : 'Готівкою кур\'єру';
+          : "Готівкою кур'єру";
       case 'card':
-        return 'Карткою кур\'єру';
+        return "Карткою кур'єру";
       case 'online':
         return 'Онлайн оплата';
       default:
-        return 'Готівкою кур\'єру';
+        return "Готівкою кур'єру";
     }
   };
 

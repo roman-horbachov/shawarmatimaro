@@ -1,5 +1,3 @@
-
-// src/components/auth/LoginForm.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
@@ -58,7 +56,7 @@ const LoginForm: React.FC = () => {
         {/* Заголовок */}
         <div className="text-center">
           <h1 className="text-2xl font-bold">Увійти в акаунт</h1>
-          <p className="mt-2 text-sm text-gray-600">Ласкаво просимо до ШаурмаТиМаРо</p>
+          <p className="mt-2 text-sm text-gray-600">Ласкаво просимо до Шаурма ТіМаРо</p>
         </div>
 
         {/* Ошибка */}
@@ -83,7 +81,6 @@ const LoginForm: React.FC = () => {
             />
           </div>
 
-          {/* Пароль + ссылка Забули пароль */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Пароль</Label>
@@ -101,7 +98,6 @@ const LoginForm: React.FC = () => {
             />
           </div>
 
-          {/* Запомнить меня */}
           <div className="flex items-center space-x-2">
             <Checkbox
                 id="remember"
@@ -113,7 +109,6 @@ const LoginForm: React.FC = () => {
             </Label>
           </div>
 
-          {/* Кнопка входа */}
           <Button
               className="w-full bg-primary hover:bg-primary-dark"
               type="submit"
@@ -123,7 +118,6 @@ const LoginForm: React.FC = () => {
           </Button>
         </form>
 
-        {/* Вход через Google */}
         <Button
             variant="outline"
             className="w-full flex items-center justify-center space-x-2"
@@ -134,7 +128,6 @@ const LoginForm: React.FC = () => {
           <span>Увійти через Google</span>
         </Button>
 
-        {/* Ссылка на регистрацию */}
         <div className="text-center pt-4">
           <p className="text-sm text-gray-600">
             Немає акаунту?{' '}

@@ -36,7 +36,6 @@ const AdminProductsPage: React.FC = () => {
 
   const categories = ['Шаурма', 'Напої', 'Снеки', 'Десерти'];
 
-  // Load products from Firebase
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
@@ -58,19 +57,16 @@ const AdminProductsPage: React.FC = () => {
     loadProducts();
   }, [toast]);
 
-  // Filter products by search term
   const filteredProducts = products.filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Исправлено: productId: string, сравнения только со строкой!
   const handleDeleteProduct = async (productId: string) => {
     try {
       await deleteProduct(productId);
 
-      // Update local state
       const updatedProducts = products.filter(product => product.id !== productId);
       setProducts(updatedProducts);
 
@@ -312,7 +308,6 @@ const AdminProductsPage: React.FC = () => {
           )}
         </div>
 
-        {/* Dialog for adding new product */}
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
@@ -410,7 +405,6 @@ const AdminProductsPage: React.FC = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Dialog for editing product */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>

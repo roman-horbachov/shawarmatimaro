@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
     match /databases/{database}/documents {
 
-        // Пользователи
+        // Правила для коллекции "users"
         match /users/{userId} {
             allow create: if request.auth != null
                 && request.auth.uid == userId;
@@ -11,35 +11,31 @@ service cloud.firestore {
             allow delete: if false;
         }
 
-        // Заказы
+        // Правила для коллекции "orders"
         match /orders/{orderId} {
             allow create: if
-        (request.auth != null
-            && request.auth.uid == request.resource.data.userId)
-        ||
-        (request.auth == null // Временно разрешить создание для гостей без дополнительных проверок
-        );
+                    (request.auth != null
+                        && request.auth.uid == request.resource.data.userId)
+                    ||
+                        (request.auth == null);
 
-            // Дозволити читання для будь-якого аутентифікованого користувача
-            allow read: if request.auth != null;
+            allow read: if true;
 
-            // Дозволити оновлення для будь-якого аутентифікованого користувача
-            allow update: if request.auth != null;
+            // Разрешить обновление заказов ВСЕМ (аутентифицированным и нет)
+            allow update: if true;
 
-            // Видалення все ще заборонено
-            allow delete: if false;
+            allow delete: if true;
         }
 
-
-        // Товары
+        // Правила для коллекции "products"
         match /products/{productId} {
             // Список и получение — открыто всем
             allow list, get: if true;
-            // CRUD только для аутентифицированных пользователей
-            allow create, update, delete: if request.auth != null;
+            // Разрешить создание, обновление и удаление товаров ВСЕМ
+            allow create, update, delete: if true;
         }
 
-        // Всё прочее — запрет
+        // Правило по умолчанию: Запретить чтение и запись для всех прочих документов
         match /{document=**} {
             allow read, write: if false;
         }

@@ -19,7 +19,6 @@ const OrderHistoryPage: React.FC = () => {
         enabled: !!user, // Only run query when user is logged in
     });
 
-    // If user is not logged in, show login prompt
     if (!user) {
         return (
             <MainLayout>
