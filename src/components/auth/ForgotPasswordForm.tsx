@@ -41,8 +41,9 @@ const ForgotPasswordForm: React.FC = () => {
                 description: "Перевірте вашу електронну пошту для отримання інструкцій щодо відновлення паролю.",
             });
 
-        } catch (err: any) {
-            setError(err.message || 'Виникла помилка при обробці запиту');
+        } catch (err: unknown) {
+            if (err instanceof Error) setError(err.message);
+            else setError('Виникла помилка при обробці запиту');
         } finally {
             setIsLoading(false);
         }

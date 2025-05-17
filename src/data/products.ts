@@ -3,7 +3,7 @@ import { Product } from '@/components/ui/ProductCard';
 
 export const products: Product[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Класична шаурма',
     description: 'Традиційна шаурма з куркою, свіжими овочами та соусом',
     price: 160,
@@ -11,7 +11,7 @@ export const products: Product[] = [
     category: 'Шаурма'
   },
   {
-    id: 2,
+    id: '2',
     name: 'Шаурма з яловичиною',
     description: 'Шаурма з соковитою яловичиною, овочами та фірмовим соусом',
     price: 180,
@@ -19,7 +19,7 @@ export const products: Product[] = [
     category: 'Шаурма'
   },
   {
-    id: 3,
+    id: '3',
     name: 'Шаурма вегетаріанська',
     description: 'Вегетаріанська шаурма з фалафелем, хумусом та овочами',
     price: 200,
@@ -27,7 +27,7 @@ export const products: Product[] = [
     category: 'Вегетаріанське'
   },
   {
-    id: 4,
+    id: '4',
     name: 'Шаурма гостра',
     description: 'Гостра шаурма з куркою, халапеньйо та гострим соусом',
     price: 170,
@@ -35,7 +35,7 @@ export const products: Product[] = [
     category: 'Гостре'
   },
   {
-    id: 5,
+    id: '5',
     name: 'Шаурма XXL',
     description: 'Велика шаурма з подвійною порцією м\'яса та овочами',
     price: 220,
@@ -43,7 +43,7 @@ export const products: Product[] = [
     category: 'Великі порції'
   },
   {
-    id: 6,
+    id: '6',
     name: 'Шаурма з бараниною',
     description: 'Шаурма з ніжною бараниною, овочами та йогуртовим соусом',
     price: 190,
@@ -51,7 +51,7 @@ export const products: Product[] = [
     category: 'Шаурма'
   },
   {
-    id: 7,
+    id: '7',
     name: 'Шаурма по-київськи',
     description: 'Шаурма з куркою, картоплею фрі та капустою по-київськи',
     price: 250,
@@ -59,7 +59,7 @@ export const products: Product[] = [
     category: 'Шаурма'
   },
   {
-    id: 8,
+    id: '8',
     name: 'Фалафель в лаваше',
     description: 'Фалафель, хумус, овочі та соус в тонкому лаваші',
     price: 220,
@@ -67,7 +67,7 @@ export const products: Product[] = [
     category: 'Вегетаріанське'
   },
   {
-    id: 9,
+    id: '9',
     name: 'Картопля фрі',
     description: 'Хрустка картопля фрі з сіллю',
     price: 70,
@@ -75,7 +75,7 @@ export const products: Product[] = [
     category: 'Гарніри'
   },
   {
-    id: 10,
+    id: '10',
     name: 'Кока-Кола 0.5л',
     description: 'Газований напій Coca-Cola',
     price: 35,

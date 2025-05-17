@@ -30,8 +30,9 @@ const LoginForm: React.FC = () => {
       }
       await login(email, password);
       navigate('/menu');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+      else setError('Невідома помилка');
     } finally {
       setIsLoading(false);
     }
@@ -44,8 +45,9 @@ const LoginForm: React.FC = () => {
     try {
       await loginWithGoogle();
       navigate('/menu');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+      else setError('Невідома помилка');
     } finally {
       setIsLoading(false);
     }

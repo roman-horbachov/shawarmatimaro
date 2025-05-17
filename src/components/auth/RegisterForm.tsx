@@ -48,10 +48,11 @@ const RegisterForm: React.FC = () => {
 
     setIsLoading(true);
     try {
- await register(email, password, name);
+      await register(email, password, name);
       navigate('/menu');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+      else setError('Виникла помилка при реєстрації');
     } finally {
       setIsLoading(false);
     }
