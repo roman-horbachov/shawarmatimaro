@@ -99,7 +99,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
             console.log("User logged in with Google");
         });
 
-    const logoutUser = () => signOut(auth);
+    const logoutUser = async () => {
+        await signOut(auth);
+        window.location.href = '/'; // Redirect to home page after logout
+    };
 
     const updateUserData = async (data: { displayName?: string; address?: string; phone?: string }) => {
         if (!user) return;

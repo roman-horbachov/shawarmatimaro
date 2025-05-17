@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import MainLayout from '@/components/layouts/MainLayout';
 import { getUserOrders } from '@/services/firebaseOrderService';
@@ -12,6 +11,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 const OrderHistoryPage: React.FC = () => {
     const { user } = useAuth();
+    const [showDetails, setShowDetails] = useState<{ [key: string]: boolean }>({});
 
     const { data: orders, isLoading, error } = useQuery({
         queryKey: ['orders', user?.uid],
@@ -28,7 +28,6 @@ const OrderHistoryPage: React.FC = () => {
                         <div className="flex items-center justify-between mb-8">
                             <h1 className="text-3xl font-bold">Історія замовлень</h1>
                         </div>
-                        
                         <div className="bg-white rounded-lg shadow-md p-12 text-center">
                             <h3 className="text-lg font-medium mb-4">Увійдіть у свій акаунт</h3>
                             <p className="text-text-muted mb-6">
@@ -53,7 +52,6 @@ const OrderHistoryPage: React.FC = () => {
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center justify-between mb-8">
                         <h1 className="text-3xl font-bold">Історія замовлень</h1>
-
                         <div className="flex gap-4">
                             <Link to="/profile">
                                 <Button variant="outline">
@@ -95,7 +93,6 @@ const OrderHistoryPage: React.FC = () => {
                                                 {getStatusLabel(order.status)}
                                             </div>
                                         </div>
-
                                         <div className="border-t border-gray-200 pt-4">
                                             <div className="space-y-3">
                                                 {order.items.map((item, index) => (
@@ -112,7 +109,6 @@ const OrderHistoryPage: React.FC = () => {
                                                     </div>
                                                 ))}
                                             </div>
-
                                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
                                                 <span className="font-medium">Загальна сума:</span>
                                                 <span className="text-lg font-bold">{order.total} ₴</span>
@@ -121,18 +117,34 @@ const OrderHistoryPage: React.FC = () => {
                                     </div>
 
                                     <div className="bg-gray-50 px-6 py-3">
-                                        <div className="text-sm text-text-muted">
-                                            Спосіб оплати: <span className="font-medium">
-                                            {order.paymentMethod === 'cash' 
-                                              ? order.changeAmount 
-                                                ? `Готівкою кур'єру (потрібна решта з ${order.changeAmount} ₴)` 
-                                                : 'Готівкою кур\'єру'
-                                              : order.paymentMethod === 'card' 
-                                                ? 'Карткою кур\'єру' 
-                                                : 'Онлайн оплата'}
-                                          </span>
+                                        <div className="flex justify-between items-end">
+                                            <div className="text-sm text-text-muted">
+                                                Спосіб оплати: <span className="font-medium">
+                                                    {order.paymentMethod === 'cash'
+                                                        ? order.changeAmount
+                                                            ? `Готівкою кур'єру (потрібна решта з ${order.changeAmount} ₴)`
+                                                            : "Готівкою кур'єру"
+                                                        : order.paymentMethod === 'card'
+                                                            ? "Карткою кур'єру"
+                                                            : 'Онлайн оплата'}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() => setShowDetails(prev => ({ ...prev, [order.id]: !prev[order.id] }))}>
+                                                    {showDetails[order.id] ? 'Приховати деталі' : 'Деталі'}
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
+                                    {showDetails[order.id] && (
+                                        <div className="text-sm text-text-muted px-6 py-3 border-t border-gray-200 mt-2">
+                                            <div>Адреса доставки: <span className="font-medium">{order.address}</span></div>
+                                            <div>Номер телефону: <span className="font-medium">{order.phone}</span></div>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
