@@ -32,10 +32,7 @@ const Header: React.FC = () => {
         <div className="container mx-auto px-4 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center mr-2">
-              <span className="text-white font-bold text-lg">ТМ</span>
-            </div>
-            <span className="font-heading font-bold text-xl md:text-2xl text-text">Шаурма ТіМаРо</span>
+            <img src="/logo.png" alt="Логотип Шаурма ТіМаРо" className="h-16 w-auto mr-2" />
           </Link>
 
           {/* Desktop Nav */}
