@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { User as UserIcon, Save } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/components/ui/use-toast';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 
 const UserProfilePage: React.FC = () => {
     const { user, userProfile, updateUserData } = useAuth();
@@ -140,33 +140,19 @@ const UserProfilePage: React.FC = () => {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="phoneNumber">Номер телефону</Label>
-                                <InputMask
-                                    mask="+380999999999"
+                                <IMaskInput
+                                    mask="+{380}000000000"
                                     value={formData.phoneNumber}
-                                    onChange={handleChange}
-                                >
-                                    {(inputProps) => (
-                                        <Input
-                                            {...inputProps}
-                                            id="phoneNumber"
-                                            placeholder="+380XXXXXXXXX"
-                                            autoComplete="off"
-                                        />
-                                    )}
-                                </InputMask>
-                            </div>
-                            <div className="flex justify-end space-x-4">
-                                <Button
-                                    variant="outline"
-                                    type="button"
-                                    onClick={handleCancel}
-                                >
-                                    Скасувати
-                                </Button>
-                                <Button className="bg-primary hover:bg-primary-dark" type="submit">
-                                    <Save className="h-4 w-4 mr-2" />
-                                    Зберегти зміни
-                                </Button>
+                                    onAccept={(value) =>
+                                        setFormData((prev) => ({ ...prev, phoneNumber: value }))
+                                    }
+                                    unmask={false}
+                                    overwrite
+                                    id="phoneNumber"
+                                    placeholder="+380XXXXXXXXX"
+                                    autoComplete="off"
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                />
                             </div>
                         </form>
                     </div>
